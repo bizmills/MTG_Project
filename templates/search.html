@@ -21,7 +21,6 @@
 	<form class="site-search" method="POST">
     	<h2 class="form-search-heading">Search Your Collection</h2>
         <input type="card name" class="form-control" placeholder="card name" autofocus />
-        <p><input type="spell type" class="form-control" placeholder="spell type" /></p>
         <p><div><label for="Set">Set</label>
             <select name="Set">
             <option value="JOU" selected>Journey Into Nyx</option>
@@ -33,6 +32,15 @@
             <option value="Uncommon">Uncommon</option>
             <option value="Rare">Rare</option>
             <option value="Mythic Rare">Mythic Rare</option>
+            </select></div></p>
+        <p><div><label for="Spell Type">Spell Type</label>
+            <select name="Spell Type">
+            <option value="creature" selected>Creature</option>
+            <option value="artifact">Artifact</option>
+            <option value="enchantment">Enchantment</option>
+            <option value="instant">Instant</option>
+            <option value="land">Land</option>
+            <option value="planeswalker">Planeswalker</option>
             </select></div></p>
        		 <a href="/search_result" </a><button type="btn btn-lg btn-primary btn-block" type="submit">Search</button>
     </form>
