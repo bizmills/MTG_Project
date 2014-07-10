@@ -1,34 +1,66 @@
+{% extends 'base.html' %}
+{% block body %}
 <html>
   <head>
     <script src='https://cdn.firebase.com/js/client/1.0.17/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
   </head>
   <body>
+  	<style>
+            body {
+                background-image: url("/static/img/plain-1395268525n8gk4.jpg");
+                background-size: cover;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+            }
+
+            div.inner.cover img {
+                width: 150px;
+            }
+        </style>
+	<form class="site-search" method="POST">
+    	<h2 class="form-search-heading">Search Your Collection</h2>
+        <input type="card name" class="form-control" placeholder="card name" autofocus />
+        <p><input type="spell type" class="form-control" placeholder="spell type" /></p>
+        <p><div><label for="Set">Set</label>
+            <select name="Set">
+            <option value="JOU" selected>Journey Into Nyx</option>
+            <option value="M15">M15</option>
+            </select></div></p>
+        <p><div><label for="Rarity">Rarity</label>
+            <select name="Rarity">
+            <option value="Common" selected>Common</option>
+            <option value="Uncommon">Uncommon</option>
+            <option value="Rare">Rare</option>
+            <option value="Mythic Rare">Mythic Rare</option>
+            </select></div></p>
+       		 <a href="/search_result" </a><button type="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+    </form>
   	<script>
-  		var myDataRef = new Firebase(glowing-fire-1328.firebaseIO.com)
-  		function go() {
-  		var cardId = prompt('card name?');
-  			checkIfCardExists(cardId);
-}
+  {% endblock %}
+//   // Seeing if card name is in database
+//   		var myDataRef = new Firebase(glowing-fire-1328.firebaseIO.com)
+//   		function go() {
+//   		var cardId = prompt('card name?');
+//   			checkIfCardExists(cardId);
  
-		var CARDS_LOCATION = 'https://cdn.firebase.com/js/client/1.0.17/glowing-fire-1328/cards/name';
+// 		var CARDS_LOCATION = 'https://cdn.firebase.com/js/client/1.0.17/glowing-fire-1328/cards/0/name';
  
-		function cardExistsCallback(cardId, exists) {
-  			if (exists) {
-    	alert('card' + cardId + ' exists!');
-  } 		else {
-    	alert('card' + cardId + ' does not exist!');
-  }
-}
+// 		function cardExistsCallback(cardId, exists) {
+//   			if (exists) {
+//     	alert('card' + cardId + ' exists!');
+//   } 		else {
+//     	alert('card' + cardId + ' does not exist!');
+//   }
+
  
-// Tests to see if /users/<cardId> has any data. 
-		function checkIfCardExists(cardId) {
-  		var usersRef = new Firebase(CARDS_LOCATION);
-  			usersRef.child(cardId).once('value', function(snapshot) {
-    	var exists = (snapshot.val() !== null);
-    		cardExistsCallback(cardId, exists);
-  });
-}
-	</script>
+// // Tests to see if /users/<cardId> has any data. 
+// 		function checkIfCardExists(cardId) {
+//   		var usersRef = new Firebase(CARDS_LOCATION);
+//   			usersRef.child(cardId).once('value', function(snapshot) {
+//     	var exists = (snapshot.val() !== null);
+//     		cardExistsCallback(cardId, exists);
+//   });
+// 	</script>
   </body>
 </html>
