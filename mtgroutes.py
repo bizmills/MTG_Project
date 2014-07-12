@@ -1,5 +1,5 @@
 from flask import Flask, request, session, render_template, g, redirect, url_for, flash
-import model
+# import model import db_session
 import jinja2
 
 
@@ -17,15 +17,28 @@ def scan_card():
     """Image is scanned and matched"""
     #Lots of code goes here
     return render_template("scan.html")
-                          
-@app.route("/search")
-def search_collection():
-    """can search on card title, spell type, set, rarity""" 
-    return render_template("search.html")
 
-@app.route("/search_result")
-def  search_results():
-    """returns the results of the search"""
+@app.route("/update", methods=["GET"])
+def display_update():
+    """manually update collection"""
+    return render_template("update.html")
+
+@app.route("/update", methods=["POST"])
+def update_collection():
+    """can search on card title, spell type, set, rarity""" 
+
+    return render_template("update_results.html")
+
+@app.route("/search", methods=["GET"])
+def display_search():
+    return render_template("search.html")
+                          
+@app.route("/search", methods=["POST"])
+def search_collection():
+    # query = request.form['name']
+    # cards = db_session.query(Collection)
+    """can search on card title, spell type, set, rarity""" 
+
     return render_template("search_results.html")
     
 

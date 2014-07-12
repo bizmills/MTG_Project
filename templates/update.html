@@ -6,7 +6,7 @@
   <body>
   	<style>
             body {
-                background-image: url("/static/img/plain-1395268525n8gk4.jpg");
+                background-image: url("/static/img/MTG_RTR_Forest_lg.jpg");
                 background-size: cover;
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
@@ -16,8 +16,8 @@
                 width: 150px;
             }
         </style>
-	<form action="{{url_for("search_collection")}}" method="POST">
-    	<h2 class="form-search-heading">Search Your Collection</h2>
+	<form action="{{url_for("update_collection")}}" method="POST">
+    	<h2 class="form-search-heading">Update Your Collection</h2>
         <input type="card name" class="form-control" placeholder="card name" autofocus />
         <p><div><label for="Set">Set</label>
             <select name="Set">
@@ -43,7 +43,14 @@
             <option value="land">Land</option>
             <option value="planeswalker">Planeswalker</option>
             </select></div></p>
-       		 <a href="/search_result" </a><button type="btn btn-lg btn-primary btn-block" input type="submit">Search</button>
+        <div>
+            <label>Add</label>
+            <input type="radio" name="qty" value="1"></input></div>
+            
+            <div>
+            <label>Remove</label>
+            <input type="radio" name="qty" value="-1"></input></div>
+       		 <a href="/update_result" </a><button type="btn btn-lg btn-primary btn-block" input type="submit">Update</button>
     </form>
  {% endblock %}
   	<script>
