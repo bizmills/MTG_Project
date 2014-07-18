@@ -1,7 +1,12 @@
+Flask==0.10.1
+Jinja2==2.7.3
+MarkupSafe==0.23
 Pillow==2.5.0
 SimpleCV==1.3
+Werkzeug==0.9.6
 gnureadline==6.3.3
 ipython==2.1.0
+itsdangerous==0.24
 mercurial==3.0.2
 nose==1.3.1
 numpy==1.8.1
@@ -10,3 +15,9 @@ python-firebase==1.2
 requests==2.3.0
 scipy==0.14.0
 wsgiref==0.1.2
+Flask-SQLAlchemy==0.16
+Flask-WTF==0.8
+SQLAlchemy==0.7.9
+WTForms==1.0.2
+hashlib==20081119
+gmpy==1.17

@@ -12,27 +12,45 @@ db_session = scoped_session(sessionmaker(bind=engine,
 Base = declarative_base()
 Base.query = db_session.query_property
 
-class Cards (Base):
+class Card (Base):
 	__tablename__= "cards"
 
 	id = Column(Integer, primary_key = True)
 	name = Column(String(64), nullable=True)
-	spellType = Column(String(50), nullable=True)
-	setName = Column(String(50), nullable=True)
+	spellTypes = Column(String(50), nullable=True)
+	sets_id = Column(String, ForeignKey('sets.id'), nullable=True)
 	rarity = Column(String(30), nullable=True)
-	imageName = Column(String(255), nullable=True)
-	hashID=Column(String(255), nullable=True)
+	hashId=Column(String(255), nullable=True)
 
 class Collection(Base):
-	__tablename__="collection"
-
+	__tablename__="collections"
 	id = Column(Integer, primary_key = True)
-	cards_id = Column(Integer, nullable = True)
-	user = Column(String(30), nullable = True)
+	collectionName = Column(String(64), nullable=True)
+	users_id= Column(String, ForeignKey('users.id'), nullable = True)
+
+class Collection_item(Base):
+	__tablename__="collection_items"
+	id = Column(Integer, primary_key = True)
+	cards_id = Column(Integer, ForeignKey('cards.id'), nullable = True)
+	collections_id = Column(Integer, ForeignKey('collections.id'), nullable = True)
+
+class User(Base):
+	__tablename__="users"
+	id = Column(Integer, primary_key = True)
+	userName = Column(String(50), nullable=True)
+	email = Column(String(64), nullable=True)
+	password = Column(String(64), nullable = True)
+
+class Set(Base):
+	__tablename__="sets"
+	id = Column(String, primary_key = True)
+	setName = Column(String(50), nullable=True)
 
 def main():
     """placeholder"""
-    pass
+    global Base
+    global engine
+    Base.metadata.create_all(engine)
 
 if __name__ == "__main__":
     main()

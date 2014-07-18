@@ -15,7 +15,13 @@ def index():
 @app.route("/scan")
 def scan_card():
     """Image is scanned and matched"""
-    #Lots of code goes here
+    #scan image
+    #morph scanned image to fix image angles
+    #grascale the image
+    #scale image down to 8X8
+    #dhash image
+    #x or operation to determine match points
+    #bit population count to determine how different two images are
     return render_template("scan.html")
 
 @app.route("/update", methods=["GET"])
@@ -37,9 +43,10 @@ def display_search():
 def search_collection():
     # query = request.form['name']
     # cards = db_session.query(Collection)
+    print request.form
     """can search on card title, spell type, set, rarity""" 
 
-    return render_template("search_results.html")
+    return render_template("search.html")
     
 
 if __name__ == "__main__":
