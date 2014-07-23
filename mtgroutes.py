@@ -1,6 +1,8 @@
 from flask import Flask, request, session, render_template, g, redirect, url_for, flash
 from model import db_session
 import jinja2
+import tempfile
+
 
 
 app = Flask(__name__)
@@ -22,6 +24,15 @@ def scan_card():
     #dhash image
     #x or operation to determine match points
     #bit population count to determine how different two images are
+    return render_template("scan.html")
+
+@app.route("/tempimg", methods=["POST"])
+def pass_img():
+    print "inside pass_img"
+    saveimg = request.form.get('imgBase64')
+    print "save image"
+    new_temp = tempfile.NamedTemporaryFile(delete=False)
+    print new_temp.name
     return render_template("scan.html")
 
 @app.route("/update", methods=["GET"])

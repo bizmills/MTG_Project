@@ -1,8 +1,6 @@
-console.log("Im here");
 // Put event listeners into place
 document.addEventListener("DOMContentLoaded", function() {
   // Grab elements, create settings, etc.
-console.log("canvas is here");
   var canvas = document.getElementById("canvas"),
     context = canvas.getContext("2d"),
     video = document.getElementById("video"),
@@ -10,6 +8,9 @@ console.log("canvas is here");
     errBack = function(error) {
       console.log("Video capture error: ", error.code);
     };
+  // //save snapped image as internal url
+  var dataURL = canvas.toDataURL();
+    save = document.getElementById('snap').src = dataURL;
 
   // Put video listeners into place
   if(navigator.getUserMedia) { // Standard
@@ -31,8 +32,19 @@ console.log("canvas is here");
   }
 
 
-// Trigger photo take
+// Takes image, drawImage params (img, cooridnates on canvas, weith, height)
 document.getElementById("snap").addEventListener("click", function() {
   context.drawImage(video, 0, 0, 640, 480);
 });
+document.getElementById('save').addEventListener("click", function() {
+  //this will be an ajax call
+  $.ajax({
+    method: "POST",
+    url: "/tempimg",
+    data: {
+      imgBase64: dataURL
+    }
+  });
+});
+
 }, false);
