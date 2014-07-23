@@ -1,0 +1,54 @@
+
+div.navbar-header img {
+    width: 120px;
+    float: left;
+    margin-top: 7px;
+    margin-right: 7px;
+}
+
+
+.form-site-search {
+  max-width: 200px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-site-search .form-search-heading,
+.form-site-search .checkbox {
+  margin-bottom: 10px;
+}
+.form-site-search .checkbox {
+  font-weight: normal;
+}
+.form-site-search .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-sight-search .form-control:focus {
+  z-index: 2;
+}
+.form-site-search input[type="card name"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-site-search input[type="spell type"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-site-search input[type="set"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-site-search input[type="Rarity"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

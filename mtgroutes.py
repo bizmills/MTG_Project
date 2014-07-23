@@ -1,5 +1,5 @@
 from flask import Flask, request, session, render_template, g, redirect, url_for, flash
-# import model import db_session
+from model import db_session
 import jinja2
 
 
@@ -31,7 +31,19 @@ def display_update():
 
 @app.route("/update", methods=["POST"])
 def update_collection():
-    """can search on card title, spell type, set, rarity""" 
+    """can add to collection with card title, spell type, set, rarity""" 
+    #collection_name = request.form['c_name']
+    card_name = request.form['name']
+    setName = request.form['Set']
+    rarity = request.form['Rarity']
+    spell_type = request.form['Spell Type']
+    existing = db_session.query(Card).filter_by(name=name).first()
+    if existing:
+        flash("you've successfully added a card to your collection")
+    c = Collection_item(cards_id = cards.id)
+    db_session.add(c)
+    db_session.commit()
+    db_session.refresh(c)
 
     return render_template("update_results.html")
 

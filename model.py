@@ -33,6 +33,8 @@ class Collection_item(Base):
 	id = Column(Integer, primary_key = True)
 	cards_id = Column(Integer, ForeignKey('cards.id'), nullable = True)
 	collections_id = Column(Integer, ForeignKey('collections.id'), nullable = True)
+	card = relationship ("Card", backref = "collection_items")
+	collection = relationship ("Collection", backref = "collection_items")
 
 class User(Base):
 	__tablename__="users"

@@ -18,7 +18,7 @@
         </style>
 	<form action="{{url_for("search_collection")}}" method="POST">
     	<h2 class="form-search-heading">Search Your Collection</h2>
-        <input type="card name" class="form-control" placeholder="card name" autofocus />
+        <input type="text" name = "query" class="form-control" placeholder="card name" autofocus />
         <p><div><label for="Set">Set</label>
             <select name="Set">
             <option value="none" selected>None</option>
@@ -43,7 +43,7 @@
             <option value="land">Land</option>
             <option value="planeswalker">Planeswalker</option>
             </select></div></p>
-       		 <a href="/search_result" </a><button type="btn btn-lg btn-primary btn-block" input type="submit">Search</button>
+       	<button type="btn btn-lg btn-primary btn-block" input type="submit">Search</button>
     </form>
  {% endblock %}
   	<script>

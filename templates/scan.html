@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block body %}
+  	<video id="video" width="640" height="480" autoplay></video>
+	<button id="snap">scan card</button>
+	<canvas id="canvas" width="640" height="480"></canvas>
+ {% endblock %}
+ {% block js %}
+ 	<script src="/static/js/scan.js"></script>
+ {% endblock %}

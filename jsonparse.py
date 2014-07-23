@@ -12,11 +12,11 @@ def load_cards(db_session):
 			name = card['name']
 			spellTypes = card['type']
 			rarity = card['rarity']
+			sets_id = 1
 			print " I am %s type: %s rarity: %s" % (name, spellTypes, rarity)
 
-			card_data = model.Card(name = name, spellTypes = spellTypes, rarity = rarity)
+			card_data = model.Card(name = name, spellTypes = spellTypes, rarity = rarity, sets_id = sets_id)
 			db_session.add(card_data)
-
 
 def main(db_session):
 	load_cards(db_session)

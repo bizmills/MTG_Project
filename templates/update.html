@@ -18,7 +18,8 @@
         </style>
 	<form action="{{url_for("update_collection")}}" method="POST">
     	<h2 class="form-search-heading">Update Your Collection</h2>
-        <input type="card name" class="form-control" placeholder="card name" autofocus />
+        <input type="collection name" name = "c_name" class="form-control" placeholder="collection name"/>
+        <input type="card name" name = "name" class="form-control" placeholder="card name" autofocus />
         <p><div><label for="Set">Set</label>
             <select name="Set">
             <option value="none" selected>None</option>
@@ -44,11 +45,11 @@
             <option value="planeswalker">Planeswalker</option>
             </select></div></p>
         <div>
-            <label>Add</label>
+            <label>Add Card</label>
             <input type="radio" name="qty" value="1"></input></div>
             
             <div>
-            <label>Remove</label>
+            <label>Remove Card</label>
             <input type="radio" name="qty" value="-1"></input></div>
        		 <a href="/update_result" </a><button type="btn btn-lg btn-primary btn-block" input type="submit">Update</button>
     </form>

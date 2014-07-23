@@ -1,12 +1,12 @@
 
 from PIL import Image
 import hashlib 
+import imagehash
 
 def load_img():
-	image1 = Image.open("JOU_imgs/Font_Of_Ire.png")
+	image1 = Image.open("JOU_imgs/Worst_Fears.png")
 	image2 = Image.open("JOU_imgs/Hypnotic_Siren.png")
-	image1.show()
-	image2.show()
+
 	return image1, image2
 
 
@@ -14,39 +14,65 @@ def load_img():
 def make_gray(image1, image2):
 	imageG1 = image1.convert('L')
 	imageG2 = image2.convert('L')
-	imageG1.show()
-	imageG2.show()
 
 	return imageG1, imageG2
 
-#makes img 8X8
+#makes img 9X8
 def make_small(imageG1, imageG2):
-	small1 = imageG1.resize((8, 8), Image.BICUBIC)
-	small2 = imageG2.resize((8, 8), Image.BICUBIC)
-	small1.show()
-	small2.show()
-	return  small1,  small2
+	small1 = imageG1.resize((9, 8), Image.BICUBIC)
+	small2 = imageG2.resize((9, 8), Image.BICUBIC)
+
+	return  small1, small2
 
 #calculates the hash
 def hash_img(small1, small2):
-	hashimg1 = hash('small1')
-	hashimg2 = hash('small2')
+	hashimg1 = imagehash.dhash(small1)
+	hashimg2 = imagehash.dhash(small2)
 	print hashimg1
 	print hashimg2
 	return hashimg1, hashimg2
 
 def compare(hashimg1, hashimg2):
-	if hashimg1 == hashimg2:
-		print True
-	else:
-		print False
+	print hashimg1 == hashimg2
+	return hashimg1 == hashimg2
+
+def hash_to_bin(hashimg1, hashimg2):
+	h1 = str(hashimg1)
+	h2 = str(hashimg2)
+	num_of_bits = 8
+	hashbin1 = bin(int(h1, 16))[2:].zfill(num_of_bits) # backfills 0s 
+	hashbin2 = bin(int(h2, 16))[2:].zfill(num_of_bits)
+	print hashbin1
+	print hashbin2
+	return hashbin1, hashbin2
+
+def ham_dist(hashbin1, hashbin2):
+	diffs = 0
+	for ch1, ch2 in zip(hashbin1, hashbin2):
+		if ch1 != ch2:
+			diffs += 1
+	print diffs
+	return diffs
+
+# def is_similar(diffs):
+# 	if diffs <= 5:
+# 		same = True
+# 	else:
+# 		same = False
+# 	print same
+# 	return same
 
 def main():
-	loaded = load_img()
-	gray = make_gray(loaded)
-	small = make_small(gray)
-	hashimg = hash_img(small)
-	compare = compare(hashimg)
+	loaded1, loaded2 = load_img()
+	gray1, gray2 = make_gray(loaded1, loaded2)
+	small1, small2 = make_small(gray1, gray2)
+	hashimg1, hashimg2 = hash_img(small1, small2)
+	# s = str(hashimg1)
+	# print type(s), s
+	result = compare(hashimg1, hashimg2)
+	hashbin1, hashbin2 = hash_to_bin(hashimg1, hashimg2)
+	diff = ham_dist(hashbin1, hashbin2)
+	# same = is_similar(diffs)
 
 if __name__ == "__main__":
 	main()

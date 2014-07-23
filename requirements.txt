@@ -21,3 +21,4 @@ SQLAlchemy==0.7.9
 WTForms==1.0.2
 hashlib==20081119
 gmpy==1.17
+ImageHash==0.3
