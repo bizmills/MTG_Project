@@ -20,7 +20,7 @@ class Card (Base):
 	spellTypes = Column(String(50), nullable=True)
 	sets_id = Column(String, ForeignKey('sets.id'), nullable=True)
 	rarity = Column(String(30), nullable=True)
-	hashId=Column(String(255), nullable=True)
+	hashId=Column(String(100), nullable=True)
 
 class Collection(Base):
 	__tablename__="collections"

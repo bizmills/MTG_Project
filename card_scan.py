@@ -4,8 +4,8 @@ import hashlib
 import imagehash
 
 def load_img():
-	image1 = Image.open("JOU_imgs/Worst_Fears.png")
-	image2 = Image.open("JOU_imgs/Hypnotic_Siren.png")
+	image1 = Image.open("test_scan/hot soup.png")
+	image2 = Image.open("test_scan/test_sable.png")
 
 	return image1, image2
 
@@ -15,12 +15,15 @@ def make_gray(image1, image2):
 	imageG1 = image1.convert('L')
 	imageG2 = image2.convert('L')
 
+	print type(imageG1)
+	print dir(imageG1)
+
 	return imageG1, imageG2
 
 #makes img 9X8
 def make_small(imageG1, imageG2):
-	small1 = imageG1.resize((9, 8), Image.BICUBIC)
-	small2 = imageG2.resize((9, 8), Image.BICUBIC)
+	small1 = imageG1.resize((9, 8), Image.ANTIALIAS)
+	small2 = imageG2.resize((9, 8), Image.ANTIALIAS)
 
 	return  small1, small2
 
