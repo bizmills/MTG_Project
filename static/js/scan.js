@@ -2,47 +2,42 @@
 document.addEventListener("DOMContentLoaded", function() {
   // Grab elements, create settings, etc.
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
-    video = document.getElementById("video"),
-    videoObj = { "video": true },
-    errBack = function(error) {
-      console.log("Video capture error: ", error.code);
-    };
-  // //save snapped image as internal url
-  var dataURL = canvas.toDataURL();
-    save = document.getElementById('snap').src = dataURL;
+      context = canvas.getContext("2d"),
+      video = document.getElementById("video"),
+      videoObj = { "video": true },
+      errBack = function(error) {
+        console.log("Video capture error: ", error.code);
+      };
 
   // Put video listeners into place
   if(navigator.getUserMedia) { // Standard
-    navigator.getUserMedia(videoObj, function(stream) {
+      navigator.getUserMedia(videoObj, function(stream) {
       video.src = stream;
       video.play();
     }, errBack);
   } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-    navigator.webkitGetUserMedia(videoObj, function(stream){
+      navigator.webkitGetUserMedia(videoObj, function(stream){
       video.src = window.webkitURL.createObjectURL(stream);
       video.play();
     }, errBack);
-  }
-  else if(navigator.mozGetUserMedia) { // Firefox-prefixed
-    navigator.mozGetUserMedia(videoObj, function(stream){
+  } else if(navigator.mozGetUserMedia) { // Firefox-prefixed
+      navigator.mozGetUserMedia(videoObj, function(stream){
       video.src = window.URL.createObjectURL(stream);
       video.play();
     }, errBack);
   }
 
 
-// Takes image, drawImage params (img, cooridnates on canvas, weith, height)
+// Takes image, drawImage params (img, cooridnates on canvas, width, height)
 document.getElementById("snap").addEventListener("click", function() {
   context.drawImage(video, 0, 0, 640, 480);
 });
 document.getElementById('save').addEventListener("click", function() {
-  //this will be an ajax call
   $.ajax({
     method: "POST",
     url: "/tempimg",
     data: {
-      imgBase64: dataURL
+      imgBase64: canvas.toDataURL("image/png")
     }
   });
 });

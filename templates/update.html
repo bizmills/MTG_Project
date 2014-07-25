@@ -18,40 +18,21 @@
         </style>
 	<form action="{{url_for("update_collection")}}" method="POST">
     	<h2 class="form-search-heading">Update Your Collection</h2>
-        <input type="collection name" name = "c_name" class="form-control" placeholder="collection name"/>
         <input type="card name" name = "name" class="form-control" placeholder="card name" autofocus />
         <p><div><label for="Set">Set</label>
             <select name="Set">
             <option value="none" selected>None</option>
             <option value="JOU">Journey Into Nyx</option>
             <option value="M15">M15</option>
-            </select></div></p>
-        <p><div><label for="Rarity">Rarity</label>
-            <select name="Rarity">
-             <option value="none" selected>None</option>
-            <option value="Common">Common</option>
-            <option value="Uncommon">Uncommon</option>
-            <option value="Rare">Rare</option>
-            <option value="Mythic Rare">Mythic Rare</option>
-            </select></div></p>
-        <p><div><label for="Spell Type">Spell Type</label>
-            <select name="Spell Type">
-            <option value="none" selected>None</option>
-            <option value="creature">Creature</option>
-            <option value="artifact">Artifact</option>
-            <option value="enchantment">Enchantment</option>
-            <option value="instant">Instant</option>
-            <option value="land">Land</option>
-            <option value="planeswalker">Planeswalker</option>
-            </select></div></p>
-        <div>
+             </select></div></p>
+            <div>
             <label>Add Card</label>
             <input type="radio" name="qty" value="1"></input></div>
             
             <div>
             <label>Remove Card</label>
             <input type="radio" name="qty" value="-1"></input></div>
-       		 <a href="/update_result" </a><button type="btn btn-lg btn-primary btn-block" input type="submit">Update</button>
+             <a href="/update_result" </a><button type="btn btn-lg btn-primary btn-block" input type="submit">Update</button>
     </form>
  {% endblock %}
   	<script>

@@ -20,6 +20,7 @@ class Card (Base):
 	spellTypes = Column(String(50), nullable=True)
 	sets_id = Column(String, ForeignKey('sets.id'), nullable=True)
 	rarity = Column(String(30), nullable=True)
+	imageName = Column(String(64), nullable=True)
 	hashId=Column(String(100), nullable=True)
 
 class Collection(Base):

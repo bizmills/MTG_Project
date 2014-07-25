@@ -6,8 +6,8 @@ import time
 from PIL import Image
 import imagehash
 
+
 # .load decodes the JSON object
-# parser to seed database 
 def load_cards(db_session):
 	with open('M15.json') as f:
 		data = json.load(f)
@@ -17,10 +17,12 @@ def load_cards(db_session):
 			name = card['name']
 			spellTypes = card['type']
 			rarity = card['rarity']
+			imageName = card['imageName']
 			sets_id = 1
-			print " I am %s type: %s rarity: %s" % (name, spellTypes, rarity)
+			print imageName
+			# print " I am %s type: %s rarity: %s" % (name, spellTypes, rarity)
 
-			card_data = model.Card(name = name, spellTypes = spellTypes, rarity = rarity, sets_id = sets_id)
+			card_data = model.Card(name = name, spellTypes = spellTypes, rarity = rarity, sets_id = sets_id, imageName = imageName)
 			db_session.add(card_data)
 			db_session.commit()
 			db_session.refresh(card_data)
@@ -57,9 +59,13 @@ def hash_cards(db_session):
 		img_name = name_split[-1]
 		name_ex = img_name.split('.')
 		card_name = name_ex[0]
-		import pdb; pdb.set_trace()
-		card_from_table = db_session.query(model.Card).filter_by(name=card_name).one().update({'hashId': hashbin})
-		card_from_table.commit()
+
+		# import pdb; pdb.set_trace()
+		# need to handle exceptions
+		card_from_table = db_session.query(model.Card).filter_by(imageName=card_name).update({'hashId': hashbin})
+		db_session.add(card_from_table)
+		db_session.commit()
+		db_session.refresh(card_from_table)
 
 
 		print hashbin
