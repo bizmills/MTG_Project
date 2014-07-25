@@ -1,10 +1,10 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, ForeignKey
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Binary
 
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 
-engine = create_engine("sqlite:///mtg.db", echo = True)
+engine = create_engine("sqlite:///mtg.db", echo = False)
 db_session = scoped_session(sessionmaker(bind=engine,
                                       autocommit = False,
                                       autoflush = False))

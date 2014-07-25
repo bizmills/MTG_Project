@@ -19,7 +19,6 @@ def load_cards(db_session):
 			rarity = card['rarity']
 			imageName = card['imageName']
 			sets_id = 1
-			print imageName
 			# print " I am %s type: %s rarity: %s" % (name, spellTypes, rarity)
 
 			card_data = model.Card(name = name, spellTypes = spellTypes, rarity = rarity, sets_id = sets_id, imageName = imageName)
@@ -41,7 +40,6 @@ def hash_cards(db_session):
 
 	imgs = list() #load up an image list
 	directory = os.path.join(path, extension)
-	print directory
 	files = glob.glob(directory)
 
 	for file in files:
@@ -60,15 +58,15 @@ def hash_cards(db_session):
 		name_ex = img_name.split('.')
 		card_name = name_ex[0]
 
-		# import pdb; pdb.set_trace()
 		# need to handle exceptions
-		card_from_table = db_session.query(model.Card).filter_by(imageName=card_name).update({'hashId': hashbin})
+		card_from_table = db_session.query(model.Card).filter(model.Card.imageName==card_name).first() # returning an object which is a row from the Card tabe
+		card_from_table.hashId = hashbin # Make class attribute of card row hashbin 
 		db_session.add(card_from_table)
-		db_session.commit()
-		db_session.refresh(card_from_table)
+	db_session.commit()
+		
 
 
-		print hashbin
+	
 
 
 def main(db_session):
