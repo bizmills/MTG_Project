@@ -19,14 +19,7 @@ def index():
 
 @app.route("/scan")
 def scan_card():
-    """Image is scanned and matched"""
-    #scan image
-    #morph scanned image to fix image angles
-    #grascale the image
-    #scale image down to 8X8
-    #dhash image
-    #x or operation to determine match points
-    #bit population count to determine how different two images are
+    """Image is scanned"""
     return render_template("scan.html")
 
 
@@ -37,15 +30,16 @@ def pass_img():
     new_temp = tempfile.NamedTemporaryFile(delete=False)
     img = saveimg.split(',')
     clean_img = img[-1]
-    print clean_img
     # this returns a decoded string, need to be able to turn it into img
     decode_img = base64.b64decode(clean_img)
     new_temp.file.write(decode_img)
+    import pdb; pdb.set_trace()
     print new_temp.name
-    # scanned image is now called new_temp
+    imgfile = new_temp.name
+    # scanned image is now called clean_img
     
-    # Process the scanned image
-    img = Image.open(new_temp)
+    # # Process the scanned image
+    img = Image.open(imgfile)
     imageG = img.convert('L')
     small = imageG.resize((9, 8), Image.ANTIALIAS) 
     hashimg = imagehash.dhash(small) # hash img
@@ -53,8 +47,11 @@ def pass_img():
     num_of_bits = 8
     hashbin = bin(int(h, 16))[2:].zfill(num_of_bits) # convert to bytestring and fill in 0s
     print hashbin
-    new_temp.close()
+    # clean_img.close()
     return render_template("scan.html")
+
+@app.route("/find", methods=["GET"])
+
 
 @app.route("/update", methods=["GET"])
 def display_update():
@@ -63,18 +60,14 @@ def display_update():
 
 @app.route("/update", methods=["POST"])
 def update_collection():
-    """can add to collection with card title, spell type, set, rarity""" 
+    """can add to collection with card title""" 
     #TODO add ability to add collection name
     #collection_name = request.form['c_name']
     card_name = request.form['name']
-    #Fields not necessary for DB update
-    # setName = request.form['Set']
-    # rarity = request.form['Rarity']
-    # spell_type = request.form['Spell Type']
 
     # checking to see if card is real card from Card class and getting the card
     # ToDO handle error if card not found
-    card_from_table = db_session.query(Card).filter_by(name=card_name).all()
+    card_from_table = db_session.query(Card).filter_by(name=card_name).one()
     # if card_from_table:
     #     flash("you've successfully added a card to your collection")
     #adding row to collection items table
@@ -83,7 +76,7 @@ def update_collection():
     db_session.commit()
     db_session.refresh(col_itm_card)
 
-    return render_template("update_results.html")
+    return render_template("update.html")
 
 @app.route("/search", methods=["GET"])
 def display_search():
@@ -91,9 +84,10 @@ def display_search():
                           
 @app.route("/search", methods=["POST"])
 def search_collection():
-    # query = request.form['name']
-    # in_collection = db_session.query(Collection_item).filter(Collection_item.like("%" + query + "%")).all()
-    # print request.form
+    query = request.form['name']
+    in_collection = db_session.query(Collection_item).filter_by(Card.name.ilike("%" + query + "%")).all()
+    print request.form
+    print in_collection
     """can search on card title, spell type, set, rarity""" 
 
     return render_template("search.html")
