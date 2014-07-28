@@ -3,16 +3,14 @@
 {% block body %}
 <h2>Search Results</h2>
 <ul>
-{% for card in Collection %}
-<li><div>
-    <a href="{{url_for("name", id=collections.id)}}">{{collections.name}}</a>
-</div></li>
+{% for item in collection %}
+	<li>{{item.card.name|e}}</li>
 {% else %}
-<li>No results</li>
+	<li>No results</li>
 {% endfor %}
 </ul>
 <h2>Search Again</h2>
-<form action="{{url_for("search")}}" method="POST">
+<form action="{{url_for("display_search")}}" method="POST">
     <input type="text" name="query">
     <input type="submit">
 </form>

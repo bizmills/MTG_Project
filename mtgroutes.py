@@ -5,6 +5,8 @@ import tempfile
 import base64
 from PIL import Image
 import imagehash
+import sqlalchemy 
+from sqlalchemy import orm
 
 
 
@@ -33,7 +35,6 @@ def pass_img():
     # this returns a decoded string, need to be able to turn it into img
     decode_img = base64.b64decode(clean_img)
     new_temp.file.write(decode_img)
-    import pdb; pdb.set_trace()
     print new_temp.name
     imgfile = new_temp.name
     new_temp.close()
@@ -62,22 +63,22 @@ def display_update():
 @app.route("/update", methods=["POST"])
 def update_collection():
     """can add to collection with card title""" 
-    #TODO add ability to add collection name
-    #collection_name = request.form['c_name']
-    card_name = request.form['name']
+    while True:
+        try: 
+            card_name = request.form['name']
 
-    # checking to see if card is real card from Card class and getting the card
-    # ToDO handle error if card not found
-    card_from_table = db_session.query(Card).filter_by(name=card_name).one()
-    # if card_from_table:
-    #     flash("you've successfully added a card to your collection")
-    #adding row to collection items table
-    col_itm_card = Collection_item(cards_id = card_from_table.id)
-    db_session.add(col_itm_card)
-    db_session.commit()
-    db_session.refresh(col_itm_card)
-
-    return render_template("update.html")
+            # checking to see if card is real card from Card class and getting the card
+            card_from_table = db_session.query(Card).filter_by(name=card_name).one()
+            col_itm_card = Collection_item(cards_id = card_from_table.id)
+            db_session.add(col_itm_card)
+            db_session.commit()
+            db_session.refresh(col_itm_card)
+            flash("you've successfully added a card to your collection")
+            return render_template("update.html")
+        
+        except sqlalchemy.orm.exc.NoResultFound:
+            flash("Search countered! Try again.")
+            return render_template("update.html")
 
 @app.route("/search", methods=["GET"])
 def display_search():
@@ -85,13 +86,14 @@ def display_search():
                           
 @app.route("/search", methods=["POST"])
 def search_collection():
-    query = request.form['name']
-    in_collection = db_session.query(Collection_item).filter_by(Card.name.ilike("%" + query + "%")).all()
-    print request.form
+    query = request.form['query']
+    in_collection = db_session.query(Collection_item).filter(Card.name.ilike("%" + query + "%")).all()
+    # print request.form
     print in_collection
+    # print db_session
     """can search on card title, spell type, set, rarity""" 
-
-    return render_template("search.html")
+    #will go to search
+    return render_template("search_results.html", collection=in_collection)
     
 
 if __name__ == "__main__":
