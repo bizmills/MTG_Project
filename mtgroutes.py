@@ -36,6 +36,7 @@ def pass_img():
     import pdb; pdb.set_trace()
     print new_temp.name
     imgfile = new_temp.name
+    new_temp.close()
     # scanned image is now called clean_img
     
     # # Process the scanned image
