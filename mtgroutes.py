@@ -3,7 +3,7 @@ from model import db_session, Card, Collection, Collection_item, User, Set
 import jinja2
 import tempfile
 import base64
-from PIL import Image
+from PIL import Image, ImageChops
 import imagehash
 import sqlalchemy 
 from sqlalchemy import orm
@@ -26,31 +26,50 @@ def scan_card():
 
 
 @app.route("/tempimg", methods=["POST"])
-#stores image in a temporary file and parses
+#stores image in a temporary file  
+def controller():
+    imgfile = pass_img()
+    gs_img = grayscale(imgfile)
+    trimmed = trim_img(gs_img)
+    hashbin = resize(trimmed)
+    return render_template("scan.html")
 def pass_img():
+    import pdb; pdb.set_trace()
     saveimg = request.form.get('imgBase64')
     new_temp = tempfile.NamedTemporaryFile(delete=False)
     img = saveimg.split(',')
     clean_img = img[-1]
-    # this returns a decoded string, need to be able to turn it into img
+    # this returns a decoded string
     decode_img = base64.b64decode(clean_img)
     new_temp.file.write(decode_img)
     print new_temp.name
     imgfile = new_temp.name
     new_temp.close()
+    return imgfile
     # scanned image is now called clean_img
-    
-    # # Process the scanned image
+def grayscale(imgfile):
+    # Process the scanned image
     img = Image.open(imgfile)
     imageG = img.convert('L')
+    return imageG
+def trim_img(imageG):
+    # Crop Image
+    image_diff = Image.new(imageG.mode, imageG.size, imageG.getpixel((0,0)))
+    diff = ImageChops.difference(imageG, image_diff)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
+    if bbox:
+        return imageG.crop(bbox)
+    return imageG
+def resize(imageG):
+    # Resize for comparison
     small = imageG.resize((9, 8), Image.ANTIALIAS) 
     hashimg = imagehash.dhash(small) # hash img
     h = str(hashimg) # change to number
     num_of_bits = 8
     hashbin = bin(int(h, 16))[2:].zfill(num_of_bits) # convert to bytestring and fill in 0s
     print hashbin
-    # clean_img.close()
-    return render_template("scan.html")
+    return hashbin
 
 @app.route("/find", methods=["GET"])
 
@@ -77,7 +96,7 @@ def update_collection():
             return render_template("update.html")
         
         except sqlalchemy.orm.exc.NoResultFound:
-            flash("Search countered! Try again.")
+            flash("Update countered! Try again")
             return render_template("update.html")
 
 @app.route("/search", methods=["GET"])
@@ -87,7 +106,7 @@ def display_search():
 @app.route("/search", methods=["POST"])
 def search_collection():
     query = request.form['query']
-    in_collection = db_session.query(Collection_item).filter(Card.name.ilike("%" + query + "%")).all()
+    in_collection = db_session.query(Collection_item).filter(Card.name.like('%' + query + '%')).all()
     # print request.form
     print in_collection
     # print db_session
