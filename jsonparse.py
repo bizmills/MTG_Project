@@ -30,7 +30,7 @@ def load_cards(db_session):
 
 
 def hash_cards(db_session):
-	my_images_path = "MTGimglib/set/M15" #put your image path here if you want to override current directory
+	my_images_path = "MTGimglib/set/test_m15" #put your image path here if you want to override current directory
 	extension = "*.jpg"
 
 	if not my_images_path:
@@ -47,16 +47,18 @@ def hash_cards(db_session):
 		imageG = img.convert('L')
 		small = imageG.resize((9, 8), Image.ANTIALIAS)
 		#img hash
+		# import pdb; pdb.set_trace()
 		hashimg = imagehash.dhash(small)
 		#change to number
-		h = str(hashimg)
-		num_of_bits = 8
-		hashbin = bin(int(h, 16))[2:].zfill(num_of_bits) # backfills 0s 
+		hstr = str(hashimg)
+		num_of_bits = 64
+		hashbin = bin(int(hstr, 16))[2:].zfill(num_of_bits) # backfills 0s 
 		#get file name
 		name_split = file.split('/')
 		img_name = name_split[-1]
 		name_ex = img_name.split('.')
 		card_name = name_ex[0]
+		print len(hashbin), img_name , hashbin
 
 		# need to handle exceptions
 		card_from_table = db_session.query(model.Card).filter(model.Card.imageName==card_name).first() # returning an object which is a row from the Card tabe
