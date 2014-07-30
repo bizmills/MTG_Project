@@ -40,14 +40,15 @@ def ham_dist(hashbin, db_imgs):
 	# remove the "None"s from the list
 	matches = filter(lambda a: a != 'None', poss_cards)
 	# get the card name associated with each hash
-	import pdb; pdb.set_trace()	
+	# import pdb; pdb.set_trace()	
 	match_name = []
 	n = 0
-	your_card = db_session.query(Card).filter_by(hashId = str(matches[n])).all()[n].name
-	for match in your_card:
+	for match in matches:
+		your_card = db_session.query(Card).filter_by(hashId = str(matches[n])).all()[0].name
 		match_name.append(your_card)
 		n += 1
 	print match_name
+	print len(match_name)
 
 
 def main():
