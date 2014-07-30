@@ -33,6 +33,7 @@ def controller():
     trimmed = trim_img(gs_img)
     hashbin = resize(trimmed)
     return render_template("scan.html")
+
 def pass_img():
     import pdb; pdb.set_trace()
     saveimg = request.form.get('imgBase64')
@@ -46,12 +47,13 @@ def pass_img():
     imgfile = new_temp.name
     new_temp.close()
     return imgfile
-    # scanned image is now called clean_img
+
 def grayscale(imgfile):
     # Process the scanned image
     img = Image.open(imgfile)
     imageG = img.convert('L')
     return imageG
+
 def trim_img(imageG):
     # Crop Image
     image_diff = Image.new(imageG.mode, imageG.size, imageG.getpixel((0,0)))
@@ -60,7 +62,9 @@ def trim_img(imageG):
     bbox = diff.getbbox()
     if bbox:
         return imageG.crop(bbox)
-    return imageG
+    imageG.show()
+    return imgageG
+
 def resize(imageG):
     # Resize for comparison
     small = imageG.resize((9, 8), Image.ANTIALIAS) 
@@ -72,6 +76,7 @@ def resize(imageG):
     return hashbin
 
 @app.route("/find", methods=["GET"])
+
 
 
 @app.route("/update", methods=["GET"])

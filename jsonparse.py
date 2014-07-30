@@ -30,7 +30,7 @@ def load_cards(db_session):
 
 
 def hash_cards(db_session):
-	my_images_path = "MTGimglib/set/test_m15" #put your image path here if you want to override current directory
+	my_images_path = "MTGimglib/set/M15" #put your image path here if you want to override current directory
 	extension = "*.jpg"
 
 	if not my_images_path:
@@ -47,7 +47,6 @@ def hash_cards(db_session):
 		imageG = img.convert('L')
 		small = imageG.resize((9, 8), Image.ANTIALIAS)
 		#img hash
-		# import pdb; pdb.set_trace()
 		hashimg = imagehash.dhash(small)
 		#change to number
 		hstr = str(hashimg)
