@@ -7,6 +7,7 @@ from PIL import Image, ImageChops
 import imagehash
 import sqlalchemy 
 from sqlalchemy import orm
+# from ham_dist_stub import ham_dist, clean_str
 
 
 
@@ -32,10 +33,11 @@ def controller():
     gs_img = grayscale(imgfile)
     trimmed = trim_img(gs_img)
     hashbin = resize(trimmed)
+    clean = clean_str()
+    match = ham_dist(hashbin, clean)
     return render_template("scan.html")
 
 def pass_img():
-    import pdb; pdb.set_trace()
     saveimg = request.form.get('imgBase64')
     new_temp = tempfile.NamedTemporaryFile(delete=False)
     img = saveimg.split(',')
@@ -52,6 +54,7 @@ def grayscale(imgfile):
     # Process the scanned image
     img = Image.open(imgfile)
     imageG = img.convert('L')
+    # imageG.show() #shows grayscale image
     return imageG
 
 def trim_img(imageG):
@@ -62,18 +65,52 @@ def trim_img(imageG):
     bbox = diff.getbbox()
     if bbox:
         return imageG.crop(bbox)
-    imageG.show()
-    return imgageG
 
 def resize(imageG):
     # Resize for comparison
+    # imageG.show() # shows cropped image
     small = imageG.resize((9, 8), Image.ANTIALIAS) 
+    # small.show() # shows resized image
     hashimg = imagehash.dhash(small) # hash img
     h = str(hashimg) # change to number
-    num_of_bits = 8
+    num_of_bits = 64
     hashbin = bin(int(h, 16))[2:].zfill(num_of_bits) # convert to bytestring and fill in 0s
-    print hashbin
+    print "this is hashbin", hashbin
     return hashbin
+# this is from my ham_dist_stub
+def clean_str():
+    db_imgs = []    
+    stored_imgs = db_session.query(Card.hashId).select_from(Card).all()
+    for image in stored_imgs:
+        new_string = str(image[0])
+        db_imgs.append(new_string)
+    return db_imgs
+
+def ham_dist(hashbin, db_imgs):
+    # import pdb; pdb.set_trace()
+    poss_cards = [] # TO DO append the possible cards
+    for image in db_imgs:
+        diffs = 0
+        # while diffs <= 11:
+        for ch1, ch2 in zip(image, hashbin):
+            if ch1 != ch2:
+                diffs += 1
+        if diffs <= 10: 
+            poss_cards.append(image)
+    # import pdb; pdb.set_trace()
+    print poss_cards
+    # remove the "None"s from the list
+    matches = filter(lambda a: a != 'None', poss_cards)
+    # get the card name associated with each hash
+    # import pdb; pdb.set_trace()   
+    match_name = []
+    n = 0
+    for match in matches:
+        your_card = db_session.query(Card).filter_by(hashId = str(matches[n])).all()[0].name
+        match_name.append(your_card)
+        n += 1
+    print match_name
+    print len(match_name)
 
 @app.route("/find", methods=["GET"])
 
