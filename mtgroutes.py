@@ -35,7 +35,7 @@ def controller():
     hashbin = resize(trimmed)
     clean = clean_str()
     match = ham_dist(hashbin, clean)
-    return render_template("scan.html")
+    return render_template("find.html", match=match)
 
 def pass_img():
     saveimg = request.form.get('imgBase64')
@@ -87,34 +87,31 @@ def clean_str():
     return db_imgs
 
 def ham_dist(hashbin, db_imgs):
-    # import pdb; pdb.set_trace()
     poss_cards = [] # TO DO append the possible cards
     for image in db_imgs:
         diffs = 0
-        # while diffs <= 11:
         for ch1, ch2 in zip(image, hashbin):
             if ch1 != ch2:
                 diffs += 1
         if diffs <= 10: 
             poss_cards.append(image)
-    # import pdb; pdb.set_trace()
     print poss_cards
     # remove the "None"s from the list
     matches = filter(lambda a: a != 'None', poss_cards)
-    # get the card name associated with each hash
-    # import pdb; pdb.set_trace()   
+    # get the card name associated with each hash   
     match_name = []
     n = 0
     for match in matches:
         your_card = db_session.query(Card).filter_by(hashId = str(matches[n])).all()[0].name
         match_name.append(your_card)
         n += 1
-    print match_name
     print len(match_name)
+    print match_name
+    return match_name
 
 @app.route("/find", methods=["GET"])
-
-
+def display_match():
+    return render_template("find.html")
 
 @app.route("/update", methods=["GET"])
 def display_update():
@@ -148,10 +145,7 @@ def display_search():
 @app.route("/search", methods=["POST"])
 def search_collection():
     query = request.form['query']
-    in_collection = db_session.query(Collection_item).filter(Card.name.like('%' + query + '%')).all()
-    # print request.form
-    print in_collection
-    # print db_session
+    in_collection = db_session.query(Collection_item).filter(Card.name.ilike("%"+query+"%")).limit(10).all()
     """can search on card title, spell type, set, rarity""" 
     #will go to search
     return render_template("search_results.html", collection=in_collection)

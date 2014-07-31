@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
-
 {% block body %}
+<html>
+<head>
+</head>
+<body>
+	<style>
+            body {
+                background-image: url("/static/img/plains3.jpg");
+                background-size: cover;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+            }
+
+            div.inner.cover img {
+                width: 150px;
+            }
+      </style>
 <h2>Search Results</h2>
 <ul>
 {% for item in collection %}
@@ -15,3 +30,5 @@
     <input type="submit">
 </form>
 {% endblock %}
+</body>
+</html>
