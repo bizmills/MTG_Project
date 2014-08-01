@@ -114,8 +114,8 @@ def ham_dist(hashbin, db_imgs):
 def display_match():
     return render_template("find.html")
 
-@app.route("/update", methods=["GET"])
-def display_update():
+@app.route("/update/<name>", methods=["GET"])
+def display_update(name):
     """manually update collection"""
     return render_template("update.html")
 
