@@ -30,15 +30,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Takes image, drawImage params (img, cooridnates on canvas, width, height)
 document.getElementById("snap").addEventListener("click", function() {
-  context.drawImage(video, 0, 0, 640, 480);
+  context.drawImage(video, 0, 0, 320, 240);
 });
 document.getElementById('save').addEventListener("click", function() {
   $.ajax({
     method: "POST",
     url: "/tempimg",
     data: {
-      imgBase64: canvas.toDataURL("image/png")
+      imgBase64: canvas.toDataURL("image/png"),
+    },
+    success: function(){
+      console.log('success');
     }
+    
+  }).done(function(data){
+    console.log('got response: '+ data);
+    $('#match_results').html(data);
   });
 });
 

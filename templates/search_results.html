@@ -18,7 +18,7 @@
       </style>
 <h2>Search Results</h2>
 <ul>
-{% for item in collection %}
+{% for item in search_collection %}
 	<li>{{item.card.name|e}}</li>
 {% else %}
 	<li>No results</li>

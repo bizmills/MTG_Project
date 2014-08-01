@@ -4,8 +4,8 @@ import hashlib
 import imagehash
 
 def load_img():
-	image1 = Image.open("test_scan/hot soup.png")
-	image2 = Image.open("test_scan/test_sable.png")
+	image1 = Image.open("test_scan/inferno fist.png")
+	image2 = Image.open("test_scan/test_inferno_fistcropped.png")
 
 	return image1, image2
 

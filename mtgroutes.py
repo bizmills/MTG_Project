@@ -7,7 +7,7 @@ from PIL import Image, ImageChops
 import imagehash
 import sqlalchemy 
 from sqlalchemy import orm
-# from ham_dist_stub import ham_dist, clean_str
+# from img_process import pass_img, grayscale, trim_img, resize, clean_str, ham_dist
 
 
 
@@ -35,6 +35,7 @@ def controller():
     hashbin = resize(trimmed)
     clean = clean_str()
     match = ham_dist(hashbin, clean)
+    print match
     return render_template("find.html", match=match)
 
 def pass_img():
@@ -145,10 +146,11 @@ def display_search():
 @app.route("/search", methods=["POST"])
 def search_collection():
     query = request.form['query']
-    in_collection = db_session.query(Collection_item).filter(Card.name.ilike("%"+query+"%")).limit(10).all()
+    in_collection = db_session.query(Collection_item).filter(Card.name.ilike("%" + query + "%")).limit(10)
+    print in_collection
     """can search on card title, spell type, set, rarity""" 
     #will go to search
-    return render_template("search_results.html", collection=in_collection)
+    return render_template("search_results.html", search_collection=in_collection)
     
 
 if __name__ == "__main__":
