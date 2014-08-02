@@ -146,7 +146,12 @@ def display_search():
 @app.route("/search", methods=["POST"])
 def search_collection():
     query = request.form['query']
-    in_collection = db_session.query(Collection_item).filter(Card.name.ilike("%" + query + "%")).limit(10)
+    in_collection = []
+    card_from_cards_table = db_session.query(Card).filter(Card.name.ilike("%" + query + "%"))
+    for this_card in card_from_cards_table:
+        my_id = this_card.id
+        card_in_collection = db_session.query(Collection_item).filter_by(cards_id=my_id).first()
+        in_collection.append(card_in_collection)
     print in_collection
     """can search on card title, spell type, set, rarity""" 
     #will go to search
