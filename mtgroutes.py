@@ -117,7 +117,7 @@ def display_match():
 @app.route("/update/<name>", methods=["GET"])
 def display_update(name):
     """manually update collection"""
-    return render_template("update.html")
+    return render_template("update.html", item=name)
 
 @app.route("/update", methods=["POST"])
 def update_collection():

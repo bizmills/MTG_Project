@@ -1,10 +1,11 @@
 
 <h2>Match Results</h2>
  <ul>
+ 	<h2>Select the correct card</h2>
  {% for item in match %}
 	<a href = "/update/{{item}}" ><li>{{item|e}}</li>
 {% else %}
-	<li>Can't find your card</li>
+	<li>Spell fizzeled, can't find your card</li>
 {% endfor %}
 </ul>
 

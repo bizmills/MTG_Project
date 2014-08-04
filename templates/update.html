@@ -18,7 +18,7 @@
         </style>
 	<form action="{{url_for("update_collection")}}" method="POST">
     	<h2 class="form-search-heading">Update Your Collection</h2>
-        <input type="card name" name = "name" class="form-control" placeholder="card name" autofocus />
+        <input type="text" name="name" class="form-control" placeholder="card name" autofocus  value="{{item}}"/>
         <p><div><label for="Set">Set</label>
             <select name="Set">
             <option value="none" selected>None</option>
