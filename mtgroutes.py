@@ -114,12 +114,16 @@ def ham_dist(hashbin, db_imgs):
 def display_match():
     return render_template("find.html")
 
+@app.route("/update")
+def manual_update():
+    return render_template("update.html", item=None)
+
 @app.route("/update/<name>", methods=["GET"])
 def display_update(name):
     """manually update collection"""
     return render_template("update.html", item=name)
 
-@app.route("/update", methods=["POST"])
+@app.route("/update/", methods=["POST"])
 def update_collection():
     """can add to collection with card title""" 
     while True:
@@ -133,11 +137,11 @@ def update_collection():
             db_session.commit()
             db_session.refresh(col_itm_card)
             flash("you've successfully added a card to your collection")
-            return render_template("update.html")
+            return redirect ("/update")
         
         except sqlalchemy.orm.exc.NoResultFound:
             flash("Update countered! Try again")
-            return render_template("update.html")
+            return redirect("/update")
 
 @app.route("/search", methods=["GET"])
 def display_search():
