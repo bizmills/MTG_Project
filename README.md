@@ -3,6 +3,8 @@
 ###### Tired of data entry?
 ###### Just want to know what you have in your collection? 
 
+
+
 MTGSQRL is a web application that captures your card's image through a web cam, and then determines which card it is by comparing it to a reference set of images and data. When processing, the app automatically identifies the area of interest in a captured image, finds edges, crops appropriately, and then calculates the Hamming distance between your card and the app's existing known set of images. 
 
 ### Technologies used:
@@ -50,3 +52,11 @@ Update It
 Search It
 
 ![alt text](https://github.com/bizmills/MTG_Project/blob/master/app_screenshots/search.png "search your collection")
+
+
+## Future Features
+**Create trade lists:** Allow users to generate lists of cards that are available for trade.
+**Optimize image matching algorithm to scale:** current run-time with 186 cards is fairly quick, but handling 30K cards will increase processing time
+**Improve collection reporting:** add quantity, display by attribute (spell type, rarity, etc)
+**Improve searching collection:** allow search by attributes other than name
+**Improve updating collection:** allow deletion of cards from collection
