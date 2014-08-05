@@ -24,13 +24,13 @@ Change my_images_path to reference thfile path where you've stored your referenc
 This is the flask application file
 
 ### How to capture images successfully:
-**camera**
+**camera:**
 Use an external web cam. I'm using a logitech c615
 
-**lighting**
+**lighting:**
 Bright natural light is best. Glare on the card will result in no matches.
 
-**Card placement**
+**Card placement:**
 Card should be placed flat on a white surface. Try to keep it aligned. 
 
 ## Screen Shots
@@ -38,3 +38,15 @@ Card should be placed flat on a white surface. Try to keep it aligned.
 Home screen
 
 ![alt text](https://github.com/bizmills/MTG_Project/blob/master/app_screenshots/home.png "This is the main screen")
+
+Scan It
+
+![alt text](https://github.com/bizmills/MTG_Project/blob/master/app_screenshots/scan.png "note placement of cards")
+
+Update It
+
+![alt text](https://github.com/bizmills/MTG_Project/blob/master/app_screenshots/update.png "update collection manualy")
+
+Search It
+
+![alt text](https://github.com/bizmills/MTG_Project/blob/master/app_screenshots/search.png "search your collection")
