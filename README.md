@@ -55,8 +55,20 @@ Search It
 
 
 ## Future Features
-**Create trade lists:** Allow users to generate lists of cards that are available for trade.
-**Optimize image matching algorithm to scale:** current run-time with 186 cards is fairly quick, but handling 30K cards will increase processing time
-**Improve collection reporting:** add quantity, display by attribute (spell type, rarity, etc)
-**Improve searching collection:** allow search by attributes other than name
-**Improve updating collection:** allow deletion of cards from collection
+**Create trade lists:**
+ Allow users to generate lists of cards that are available for trade.
+
+**Optimize image matching algorithm to scale:**
+ current run-time with 186 cards is fairly quick, but handling 30K cards will increase processing time
+
+**Optimize image processing:**
+Enable image morphing to control tilting card. Mitigate dependency on quality lighting
+
+**Improve collection reporting:** 
+add quantity, display by attribute (spell type, rarity, etc)
+
+**Improve searching collection:** 
+allow search by attributes other than name
+
+**Improve updating collection:** 
+allow deletion of cards from collection
